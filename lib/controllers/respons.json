@@ -1,0 +1,12 @@
+{
+    "success": true,
+    "message": "Success : User Found",
+    "data": {
+      "id": 2,
+      "name": "Slimane",
+      "lastname": "MEHARZI",
+      "username": "SlyPex",
+      "email": "s.meharzi@esi-sba.dz",
+      "password": "Skye is the best"
+    }
+  }
