@@ -159,6 +159,7 @@ class _HomeState extends State<Home> {
 //
                               'password': hashPassword.toString()
                             });
+                            print(hashPassword.toString());
                             final headers = {
                               'Content-Type': 'application/json',
                               'Access-Control-Allow-Origin':
@@ -172,9 +173,12 @@ class _HomeState extends State<Home> {
                               body: body,
                               headers: headers,
                             );
+
+                            final res = jsonDecode(response.body);
+
                             print(response.body.toString());
 
-                            if (response.statusCode == 200) {
+                            if (res['success'] == true) {
                               user = User.fromMap(
                                   jsonDecode(response.body)['data']);
                               if (context.mounted) {
@@ -184,9 +188,18 @@ class _HomeState extends State<Home> {
                                       builder: (context) =>
                                           EditProfile(user: user),
                                     ));
+                                Fluttertoast.showToast(
+                                  msg: 'Sign in successfully',
+                                  backgroundColor: Colors.red,
+                                  gravity: ToastGravity.TOP,
+                                );
                               }
                             } else {
-                              throw Exception("Failed to make POST request.");
+                              Fluttertoast.showToast(
+                                msg: res['message'].toString(),
+                                backgroundColor: Colors.red,
+                                gravity: ToastGravity.TOP,
+                              );
                             }
                           }
                         } catch (e) {
