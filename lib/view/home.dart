@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:http/src/io_client.dart';
 import 'package:acsi_auth/controllers/email_pwd_regex.dart';
 import 'package:acsi_auth/modules/user.dart';
-import 'package:acsi_auth/secret/secret.dart';
 import 'package:acsi_auth/modules/constant/colors.dart';
 import 'package:acsi_auth/view/edit_profile.dart';
 import 'package:acsi_auth/view/forget_password.dart';

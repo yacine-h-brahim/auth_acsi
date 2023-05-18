@@ -220,13 +220,13 @@ class _EditProfileState extends State<EditProfile> {
                           }
 
                           Fluttertoast.showToast(
-                              msg: 'Your account was updated succeessfully ^-^',
+                              msg: 'Your account was updated successfully ^-^',
                               gravity: ToastGravity.TOP,
                               backgroundColor: Colors.green);
                         }
                       } catch (e) {
                         Fluttertoast.showToast(
-                            msg: 'Fialed to save changes:\n${e.toString()}',
+                            msg: 'Failed to save changes:\n${e.toString()}',
                             gravity: ToastGravity.TOP,
                             backgroundColor: Colors.redAccent);
                       }

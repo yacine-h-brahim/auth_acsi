@@ -1,6 +1,5 @@
+import 'package:acsi_auth/view/diseases.dart';
 import 'package:flutter/material.dart';
-
-import 'view/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Auth ACSI',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
-      home: const Home(),
+      theme: ThemeData(primarySwatch: Colors.purple, fontFamily: 'Poppins'),
+      home: const Diseases(),
     );
   }
 }
