@@ -173,8 +173,6 @@ class _HomeState extends State<Home> {
 
                             final res = jsonDecode(response.body);
 
-                            print(response.body.toString());
-
                             if (res['success'] == true) {
                               user = User.fromMap(
                                   jsonDecode(response.body)['data']);

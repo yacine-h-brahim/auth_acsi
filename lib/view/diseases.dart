@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:acsi_auth/modules/disease.dart';
@@ -14,82 +15,141 @@ class Diseases extends StatefulWidget {
 }
 
 class _DiseasesState extends State<Diseases> {
-  late List<Symptom> symptoms;
-  late List<Disease> diseases;
+  final GlobalKey<FormState> formKey = GlobalKey();
+  TextEditingController searchController = TextEditingController();
+
+  final List<Symptom> symptoms = <Symptom>[
+    Symptom(id: '1', diseaseId: '1', value: 'Fever'),
+    Symptom(id: '1', diseaseId: '1', value: 'Cough'),
+    Symptom(id: '1', diseaseId: '1', value: 'Sore throat'),
+    Symptom(id: '1', diseaseId: '1', value: 'Runny or stuffy nose'),
+    Symptom(id: '1', diseaseId: '1', value: 'Muscle or body aches'),
+    Symptom(id: '1', diseaseId: '1', value: 'Headaches'),
+    Symptom(id: '1', diseaseId: '1', value: 'Fatigue or extreme tiredness'),
+    Symptom(id: '1', diseaseId: '1', value: 'Chills'),
+    Symptom(
+        id: '1',
+        diseaseId: '1',
+        value: 'Nausea or vomiting (more common in children)'),
+    Symptom(
+        id: '1', diseaseId: '1', value: 'Diarrhea (more common in children)'),
+  ];
+  final List<Disease> diseases = [
+    Disease(id: '1', name: 'Influenza (Flu)', symptoms: <Symptom>[
+      Symptom(id: '1', diseaseId: '1', value: 'Fever'),
+      Symptom(id: '1', diseaseId: '1', value: 'Cough'),
+      Symptom(id: '1', diseaseId: '1', value: 'Sore throat'),
+      Symptom(id: '1', diseaseId: '1', value: 'Runny or stuffy nose'),
+      Symptom(id: '1', diseaseId: '1', value: 'Muscle or body aches'),
+      Symptom(id: '1', diseaseId: '1', value: 'Headaches'),
+      Symptom(id: '1', diseaseId: '1', value: 'Fatigue or extreme tiredness'),
+      Symptom(id: '1', diseaseId: '1', value: 'Chills'),
+      Symptom(
+          id: '1',
+          diseaseId: '1',
+          value: 'Nausea or vomiting (more common in children)'),
+      Symptom(
+          id: '1', diseaseId: '1', value: 'Diarrhea (more common in children)'),
+    ])
+  ];
 
   //fill symptoms list
-  getSymptoms(String diseasesId) async {
+
+  // ignore: todo
+  //TODO: NO NEED FOR THIS METHOD FOR NOW 'AHORA in spanish '
+  // getSymptoms(String diseasesId) async {
+  //   final httpsUri = Uri(
+  //     scheme: 'https',
+  //     host: ipAddress,
+  //     path: '/disease/$diseasesId',
+  //   );
+  //   final headers = {
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Allow-Origin': '*', //'192.168.43.223'
+  //     // Replace * with the allowed domain or IP address
+  //     'Access-Control-Allow-Methods': 'Get',
+  //     'Access-Control-Allow-Headers': 'Content-Type'
+  //   };
+  //   await http
+  //       .get(
+  //     httpsUri,
+  //     headers: headers,
+  //   )
+  //       .then((response) {
+  //     for (var symptom in jsonDecode(response.body)['data'].length) {
+  //       symptoms.add(Symptom.fromMap(symptom));
+  //     }
+  //   });
+
+  //   return symptoms;
+  // }
+
+  Future<void> getDiseases() async {
     final httpsUri = Uri(
       scheme: 'https',
       host: ipAddress,
-      path: '/disease/$diseasesId',
+      path: '/diseases',
     );
     final headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*', //'192.168.43.223'
       // Replace * with the allowed domain or IP address
-      'Access-Control-Allow-Methods': 'Get',
+      'Access-Control-Allow-Methods': 'GET',
       'Access-Control-Allow-Headers': 'Content-Type'
     };
+
+// ignore: todo
+//TODO: swap between setState & then bodies if it doesn't work
     await http
         .get(
       httpsUri,
       headers: headers,
     )
-        .then((response) {
-      for (var symptom in jsonDecode(response.body)['data'].length) {
-        symptoms.add(Symptom.fromMap(symptom));
+        .then((response) async {
+      final res = jsonDecode(response.body)['diseases'];
+      for (var diseaseMap in res.length) {
+        setState(() {
+          diseases.add(Disease.fromMap(diseaseMap));
+        });
       }
     });
+  }
 
-    return symptoms;
+  Future<void> getDiseasesQuery(String query) async {
+    final httpsUri = Uri(
+      scheme: 'https',
+      host: ipAddress,
+      path: '/diseases/$query',
+    );
+    final headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*', //'192.168.43.223'
+      // Replace * with the allowed domain or IP address
+      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    };
+
+// ignore: todo
+//TODO: swap between setState & then bodies if it doesn't work
+    await http
+        .get(
+      httpsUri,
+      headers: headers,
+    )
+        .then((response) async {
+      final res = jsonDecode(response.body)['diseases'];
+      for (var diseaseMap in res.length) {
+        setState(() {
+          diseases.add(Disease.fromMap(diseaseMap));
+        });
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    symptoms = <Symptom>[
-      Symptom(id: '1', diseaseId: '1', value: 'Fever'),
-      // 'Fever'
-      //   'Cough',
-      // 'Sore throat',
-      // 'Runny or stuffy nose',
-      // 'Muscle or body aches',
-      // 'Headaches',
-      // 'Fatigue or extreme tiredness',
-      // 'Chills',
-      // 'Nausea or vomiting (more common in children)',
-      // 'Diarrhea (more common in children)',
-    ];
-
-    diseases = [Disease(id: '1', name: 'Influenza (Flu)', symptoms: symptoms)];
-    //fill diseases list
-    getDiseases() async {
-      final httpsUri = Uri(
-        scheme: 'https',
-        host: ipAddress,
-        path: '/diseases',
-      );
-      final headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*', //'192.168.43.223'
-        // Replace * with the allowed domain or IP address
-        'Access-Control-Allow-Methods': 'GET',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      };
-      await http
-          .get(
-        httpsUri,
-        headers: headers,
-      )
-          .then((response) async {
-        for (var disease in (jsonDecode(response.body)['diseases']).length) {
-          Disease diseaseTemp = Disease.fromMap(disease);
-          diseaseTemp.symptoms = await getSymptoms(diseaseTemp.id);
-          diseases.add(diseaseTemp);
-        }
-      });
-    }
+    getDiseases();
   }
 
   @override
@@ -124,12 +184,14 @@ class _DiseasesState extends State<Diseases> {
                   )
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
+              Form(
+                key: formKey,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: SizedBox(
                       width: MediaQuery.of(context).size.width * .4,
                       child: TextFormField(
+                        controller: searchController,
                         decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.search,
@@ -140,17 +202,29 @@ class _DiseasesState extends State<Diseases> {
                               color: Colors.black.withOpacity(.45),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFF97ABC0),
+                            fillColor: const Color(0xFF000000).withOpacity(.04),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12))),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'this field is required';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onFieldSubmitted: (value) {
+                          if (mounted && formKey.currentState!.validate()) {
+                            getDiseasesQuery(value);
+                          }
+                        },
                       )),
-                ],
+                ),
               ),
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  itemCount: 2,
+                  itemCount: diseases.length,
                   itemBuilder: (context, index) {
                     return Container(
                       padding: const EdgeInsets.all(20),
@@ -163,16 +237,16 @@ class _DiseasesState extends State<Diseases> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              children: const [
-                                Text(
+                              children: [
+                                const Text(
                                   'Diseases: ',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24),
                                 ),
                                 Text(
-                                  'Influenza (Flu)',
-                                  style: TextStyle(fontSize: 20),
+                                  diseases[index].name,
+                                  style: const TextStyle(fontSize: 20),
                                 ),
                               ],
                             ),
@@ -189,7 +263,7 @@ class _DiseasesState extends State<Diseases> {
                                 itemCount: symptoms.length,
                                 itemBuilder: (context, index) {
                                   return Text(
-                                      '${index + 1}. ${symptoms[index]}');
+                                      '${index + 1}. ${symptoms[index].value}');
                                 },
                               ),
                             )
