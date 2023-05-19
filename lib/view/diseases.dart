@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:acsi_auth/modules/constant/colors.dart';
 import 'package:acsi_auth/modules/disease.dart';
+import 'package:acsi_auth/view/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:acsi_auth/secret/secret.dart';
@@ -155,6 +157,52 @@ class _DiseasesState extends State<Diseases> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(120),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 70.0, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SvgPicture.asset(
+                'assets/e-sbitarLogo.svg',
+                width: 100,
+                height: 100,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.0),
+                child: Text('Diseases',
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.black,
+                    )),
+              ),
+              InkWell(
+                onTap: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Home(),
+                    )),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: purple, borderRadius: BorderRadius.circular(12)),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                    child: Text(
+                      'Log out',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 24),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
       body: DecoratedBox(
         decoration: const BoxDecoration(),
         child: Padding(
@@ -162,28 +210,6 @@ class _DiseasesState extends State<Diseases> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SvgPicture.asset(
-                    'assets/e-sbitarLogo.svg',
-                    width: 100,
-                    height: 100,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Text('Diseases',
-                        style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.black,
-                        )),
-                  ),
-                  const SizedBox(
-                    width: 100,
-                    height: 100,
-                  )
-                ],
-              ),
               Form(
                 key: formKey,
                 child: Align(
@@ -202,7 +228,7 @@ class _DiseasesState extends State<Diseases> {
                               color: Colors.black.withOpacity(.45),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFF000000).withOpacity(.04),
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12))),

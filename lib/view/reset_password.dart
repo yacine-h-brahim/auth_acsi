@@ -48,7 +48,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       obscureText: !passwordVisible,
                       decoration: InputDecoration(
                           filled: true,
-                          fillColor: lighBlue,
+                          fillColor: lightBlue,
                           suffixIcon: passwordVisible
                               ? IconButton(
                                   icon: const Icon(Icons.visibility),
@@ -84,7 +84,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       obscureText: !passwordVisible,
                       decoration: InputDecoration(
                           filled: true,
-                          fillColor: lighBlue,
+                          fillColor: lightBlue,
                           suffixIcon: passwordVisible
                               ? IconButton(
                                   icon: const Icon(Icons.visibility),

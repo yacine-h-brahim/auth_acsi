@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Auth ACSI',
-      theme: ThemeData(primarySwatch: Colors.purple, fontFamily: 'Poppins'),
+      theme: ThemeData(
+          fontFamily: 'Poppins',
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+              .copyWith(background: Colors.white)),
       home: const Diseases(),
     );
   }

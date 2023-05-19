@@ -39,7 +39,7 @@ class _EditProfileState extends State<EditProfile> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                      hoverColor: lighBlue,
+                      hoverColor: lightBlue,
                       child: Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -75,7 +75,7 @@ class _EditProfileState extends State<EditProfile> {
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -99,7 +99,7 @@ class _EditProfileState extends State<EditProfile> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -129,7 +129,7 @@ class _EditProfileState extends State<EditProfile> {
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -153,7 +153,7 @@ class _EditProfileState extends State<EditProfile> {
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),

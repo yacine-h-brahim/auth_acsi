@@ -6,6 +6,7 @@ import 'package:acsi_auth/view/home.dart';
 import 'package:acsi_auth/view/edit_profile.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import '../modules/constant/colors.dart';
@@ -25,6 +26,22 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(120),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(20.0),
+              child: SvgPicture.asset(
+                'assets/e-sbitarLogo.svg',
+                width: 100,
+                height: 100,
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Form(
             key: formKey,
@@ -42,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -64,7 +81,7 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -101,7 +118,7 @@ class _SignUpState extends State<SignUp> {
                                           passwordVisible = !passwordVisible;
                                         })),
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -110,7 +127,7 @@ class _SignUpState extends State<SignUp> {
                           if (value == null || value.isEmpty) {
                             return 'this field is required!!';
                           } else if (!passwordValidator(value)) {
-                            return 'Passoword weak, try make it stronger';
+                            return 'Password weak, try make it stronger';
                           } else {
                             return null;
                           }
@@ -125,7 +142,7 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -147,7 +164,7 @@ class _SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -169,7 +186,7 @@ class _SignUpState extends State<SignUp> {
                         width: MediaQuery.of(context).size.width * .5,
                         height: 50,
                         decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 126, 87, 218),
+                            color: const Color.fromRGBO(126, 87, 218, 1),
                             borderRadius: BorderRadius.circular(12)),
                         child: const Center(
                           child: Text(

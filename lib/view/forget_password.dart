@@ -49,7 +49,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       decoration: InputDecoration(
                           filled: true,
                           hintText: 'Enter your email',
-                          fillColor: lighBlue,
+                          fillColor: lightBlue,
                           border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(12)),

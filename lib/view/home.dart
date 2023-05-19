@@ -7,6 +7,7 @@ import 'package:acsi_auth/view/forget_password.dart';
 import 'package:acsi_auth/view/sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,6 +30,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(120),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(20.0),
+              child: SvgPicture.asset(
+                'assets/e-sbitarLogo.svg',
+                width: 100,
+                height: 100,
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Form(
             key: formKey,
@@ -54,7 +71,7 @@ class _HomeState extends State<Home> {
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
@@ -91,7 +108,7 @@ class _HomeState extends State<Home> {
                                           passwordVisible = !passwordVisible;
                                         })),
                             filled: true,
-                            fillColor: lighBlue,
+                            fillColor: lightBlue,
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12)),
