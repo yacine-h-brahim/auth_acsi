@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:acsi_auth/controllers/search_disease_function.dart';
 import 'package:acsi_auth/modules/constant/colors.dart';
 import 'package:acsi_auth/modules/disease.dart';
 import 'package:acsi_auth/view/home.dart';
@@ -16,44 +17,30 @@ class Diseases extends StatefulWidget {
   State<Diseases> createState() => _DiseasesState();
 }
 
+final List<Symptom> symptoms = <Symptom>[
+  Symptom(id: '1', diseaseId: '1', value: 'Fever'),
+  Symptom(id: '2', diseaseId: '1', value: 'Cough'),
+  Symptom(id: '3', diseaseId: '1', value: 'Sore throat'),
+  Symptom(id: '4', diseaseId: '1', value: 'Runny or stuffy nose'),
+  Symptom(id: '5', diseaseId: '1', value: 'Muscle or body aches'),
+  Symptom(id: '6', diseaseId: '1', value: 'Headaches'),
+  Symptom(id: '7', diseaseId: '1', value: 'Fatigue or extreme tiredness'),
+  Symptom(id: '8', diseaseId: '1', value: 'Chills'),
+  Symptom(
+      id: '1',
+      diseaseId: '1',
+      value: 'Nausea or vomiting (more common in children)'),
+  Symptom(id: '1', diseaseId: '1', value: 'Diarrhea (more common in children)'),
+];
+
 class _DiseasesState extends State<Diseases> {
   final GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController searchController = TextEditingController();
+  List<Disease> allDiseases = <Disease>[
+    Disease(id: '1', name: 'Influenza (Flu)', symptoms: symptoms)
+  ];
 
-  final List<Symptom> symptoms = <Symptom>[
-    Symptom(id: '1', diseaseId: '1', value: 'Fever'),
-    Symptom(id: '1', diseaseId: '1', value: 'Cough'),
-    Symptom(id: '1', diseaseId: '1', value: 'Sore throat'),
-    Symptom(id: '1', diseaseId: '1', value: 'Runny or stuffy nose'),
-    Symptom(id: '1', diseaseId: '1', value: 'Muscle or body aches'),
-    Symptom(id: '1', diseaseId: '1', value: 'Headaches'),
-    Symptom(id: '1', diseaseId: '1', value: 'Fatigue or extreme tiredness'),
-    Symptom(id: '1', diseaseId: '1', value: 'Chills'),
-    Symptom(
-        id: '1',
-        diseaseId: '1',
-        value: 'Nausea or vomiting (more common in children)'),
-    Symptom(
-        id: '1', diseaseId: '1', value: 'Diarrhea (more common in children)'),
-  ];
-  final List<Disease> diseases = [
-    Disease(id: '1', name: 'Influenza (Flu)', symptoms: <Symptom>[
-      Symptom(id: '1', diseaseId: '1', value: 'Fever'),
-      Symptom(id: '1', diseaseId: '1', value: 'Cough'),
-      Symptom(id: '1', diseaseId: '1', value: 'Sore throat'),
-      Symptom(id: '1', diseaseId: '1', value: 'Runny or stuffy nose'),
-      Symptom(id: '1', diseaseId: '1', value: 'Muscle or body aches'),
-      Symptom(id: '1', diseaseId: '1', value: 'Headaches'),
-      Symptom(id: '1', diseaseId: '1', value: 'Fatigue or extreme tiredness'),
-      Symptom(id: '1', diseaseId: '1', value: 'Chills'),
-      Symptom(
-          id: '1',
-          diseaseId: '1',
-          value: 'Nausea or vomiting (more common in children)'),
-      Symptom(
-          id: '1', diseaseId: '1', value: 'Diarrhea (more common in children)'),
-    ])
-  ];
+  List<Disease> diseases = [];
 
   //fill symptoms list
 
@@ -111,37 +98,7 @@ class _DiseasesState extends State<Diseases> {
       final res = jsonDecode(response.body)['diseases'];
       for (var diseaseMap in res.length) {
         setState(() {
-          diseases.add(Disease.fromMap(diseaseMap));
-        });
-      }
-    });
-  }
-
-  Future<void> getDiseasesQuery(String query) async {
-    final httpsUri = Uri(
-      scheme: 'https',
-      host: ipAddress,
-      path: '/diseases/$query',
-    );
-    final headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*', //'192.168.43.223'
-      // Replace * with the allowed domain or IP address
-      'Access-Control-Allow-Methods': 'GET',
-      'Access-Control-Allow-Headers': 'Content-Type'
-    };
-
-// ignore: todo
-//TODO: swap between setState & then bodies if it doesn't work
-    await http
-        .get(
-      httpsUri,
-      headers: headers,
-    )
-        .then((response) async {
-      final res = jsonDecode(response.body)['diseases'];
-      for (var diseaseMap in res.length) {
-        setState(() {
+          allDiseases.add(Disease.fromMap(diseaseMap));
           diseases.add(Disease.fromMap(diseaseMap));
         });
       }
@@ -152,6 +109,10 @@ class _DiseasesState extends State<Diseases> {
   void initState() {
     super.initState();
     getDiseases();
+    //TODO:just for now
+    //diseases will be allDiseases list
+    diseases = allDiseases;
+    print(allDiseases);
   }
 
   @override
@@ -233,7 +194,7 @@ class _DiseasesState extends State<Diseases> {
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(12))),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value == null || value.length < 2) {
                             return 'this field is required';
                           } else {
                             return null;
@@ -241,7 +202,10 @@ class _DiseasesState extends State<Diseases> {
                         },
                         onFieldSubmitted: (value) {
                           if (mounted && formKey.currentState!.validate()) {
-                            getDiseasesQuery(value);
+                            setState(() {
+                              diseases =
+                                  searchDiseasesMethod(allDiseases, value);
+                            });
                           }
                         },
                       )),

@@ -4,6 +4,7 @@ import 'package:acsi_auth/controllers/email_pwd_regex.dart';
 import 'package:acsi_auth/modules/user.dart';
 import 'package:acsi_auth/view/home.dart';
 import 'package:acsi_auth/view/edit_profile.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -223,9 +224,7 @@ class _SignUpState extends State<SignUp> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => EditProfile(
-                                        user: user,
-                                      ),
+                                      builder: (context) => const Home(),
                                     ));
                               }
 
