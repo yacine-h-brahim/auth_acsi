@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:acsi_auth/controllers/search_disease_function.dart';
+import 'package:acsi_auth/controllers/search_symptoms_function.dart';
 import 'package:acsi_auth/modules/constant/colors.dart';
 import 'package:acsi_auth/modules/disease.dart';
 import 'package:acsi_auth/view/home.dart';
@@ -41,6 +42,7 @@ class _DiseasesState extends State<Diseases> {
   ];
 
   List<Disease> diseases = [];
+  bool searchWithSymptoms = false;
 
   //fill symptoms list
 
@@ -175,40 +177,71 @@ class _DiseasesState extends State<Diseases> {
                 key: formKey,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: SizedBox(
-                      width: MediaQuery.of(context).size.width * .4,
-                      child: TextFormField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.black.withOpacity(.45),
-                            ),
-                            hintText: 'search for Diseases & Symptoms ....',
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(.45),
-                            ),
-                            filled: true,
-                            fillColor: lightBlue,
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(12))),
-                        validator: (value) {
-                          if (value == null || value.length < 2) {
-                            return 'this field is required';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onFieldSubmitted: (value) {
-                          if (mounted && formKey.currentState!.validate()) {
-                            setState(() {
-                              diseases =
-                                  searchDiseasesMethod(allDiseases, value);
-                            });
-                          }
-                        },
-                      )),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: TextFormField(
+                            controller: searchController,
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.black.withOpacity(.45),
+                                ),
+                                hintText: 'search for Diseases & Symptoms ....',
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(.45),
+                                ),
+                                filled: true,
+                                fillColor: lightBlue,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(12))),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'this field is required';
+                              } else if (value.length < 2) {
+                                return 'please provide a longer text for better search match';
+                              } else {
+                                return null;
+                              }
+                            },
+                            onFieldSubmitted: (value) {
+                              if (mounted && formKey.currentState!.validate()) {
+                                // ignore: todo
+                                //TODO: switch case depending on the value of symptoms checkBox
+
+                                setState(() {
+                                  diseases = searchWithSymptoms
+                                      ? searchSymptomsMethod(allDiseases, value)
+                                      : searchDiseasesMethod(
+                                          allDiseases, value);
+                                });
+                              }
+                            },
+                          )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Checkbox(
+                            checkColor: Colors.white,
+                            activeColor: purple,
+                            value: searchWithSymptoms,
+                            onChanged: (value) {
+                              setState(() {
+                                searchWithSymptoms = value!;
+                              });
+                            },
+                          ),
+                          const Text(
+                            'search by Symptoms',
+                            style: TextStyle(fontSize: 17.0),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
