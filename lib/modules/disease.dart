@@ -2,9 +2,9 @@
 import 'dart:convert';
 
 class Disease {
-  String id;
+  int id;
   String name;
-  List<Symptom> symptoms = <Symptom>[];
+  List<Symptom> symptoms = [];
 
   Disease({
     required this.id,
@@ -22,10 +22,10 @@ class Disease {
 
   factory Disease.fromMap(Map<String, dynamic> map) {
     return Disease(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       symptoms: List<Symptom>.from(
-        (map['symptoms'] as List<Symptom>).map<Symptom>(
+        (map['symptoms']).map<Symptom>(
           (x) => Symptom.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -39,28 +39,34 @@ class Disease {
 }
 
 class Symptom {
-  String id;
-  String diseaseId;
-  String value;
+  int id;
+  String description;
+  String name;
+
   Symptom({
     required this.id,
-    required this.diseaseId,
-    required this.value,
+    required this.description,
+    required this.name,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'diseaseId': diseaseId,
-      'value': value,
+      'description': description,
+      'name': name,
     };
   }
 
   factory Symptom.fromMap(Map<String, dynamic> map) {
     return Symptom(
-      id: map['id'] as String,
-      diseaseId: map['diseaseId'] as String,
-      value: map['value'] as String,
+      id: map['id'] as int,
+      description: map['description'] as String,
+      name: map['name'] as String,
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Symptom.fromJson(String source) =>
+      Symptom.fromMap(json.decode(source) as Map<String, dynamic>);
 }

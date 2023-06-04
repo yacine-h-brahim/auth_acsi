@@ -3,12 +3,10 @@ import 'dart:convert';
 import 'package:acsi_auth/controllers/email_pwd_regex.dart';
 import 'package:acsi_auth/modules/user.dart';
 import 'package:acsi_auth/view/home.dart';
-import 'package:acsi_auth/view/edit_profile.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import '../modules/constant/colors.dart';
 import 'package:crypto/crypto.dart';
@@ -228,25 +226,26 @@ class _SignUpState extends State<SignUp> {
                                     ));
                               }
 
-                              Fluttertoast.showToast(
-                                  msg: 'your account was created successfully',
-                                  gravity: ToastGravity.TOP,
-                                  backgroundColor: Colors.green[400]);
+                              // Fluttertoast.showToast(
+                              //     msg: 'your account was created successfully',
+                              //     gravity: ToastGravity.TOP,
+                              //     backgroundColor: Colors.green[400]);
                             } else {
-                              Fluttertoast.showToast(
-                                msg: res['message'].toString(),
-                                backgroundColor: Colors.red,
-                                gravity: ToastGravity.TOP,
-                              );
+                              // Fluttertoast.showToast(
+                              //   msg: res['message'].toString(),
+                              //   backgroundColor: Colors.red,
+                              //   gravity: ToastGravity.TOP,
+                              // );
                             }
                           }
                         } catch (e) {
                           final error = e as Map;
-                          Fluttertoast.showToast(
-                            msg: error['message'].toString(),
-                            backgroundColor: Colors.red,
-                            gravity: ToastGravity.TOP,
-                          );
+                          print(error);
+                          // Fluttertoast.showToast(
+                          //   msg: error['message'].toString(),
+                          //   backgroundColor: Colors.red,
+                          //   gravity: ToastGravity.TOP,
+                          // );
                         }
                       }),
                   const SizedBox(height: 8),

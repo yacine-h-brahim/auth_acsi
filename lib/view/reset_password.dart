@@ -3,7 +3,6 @@ import 'package:acsi_auth/modules/constant/colors.dart';
 import 'package:acsi_auth/secret/secret.dart';
 import 'package:acsi_auth/view/home.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -140,10 +139,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                           // final response = await http.get(uri);
                         }
                       } catch (e) {
-                        Fluttertoast.showToast(
-                            msg: e.toString(),
-                            backgroundColor: Colors.redAccent,
-                            gravity: ToastGravity.TOP);
+                        // Fluttertoast.showToast(
+                        //     msg: e.toString(),
+                        //     backgroundColor: Colors.redAccent,
+                        //     gravity: ToastGravity.TOP);
                       }
                     }),
                 const SizedBox(height: 20),

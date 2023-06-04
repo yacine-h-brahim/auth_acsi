@@ -8,7 +8,6 @@ import 'package:acsi_auth/modules/disease.dart';
 import 'package:acsi_auth/view/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:acsi_auth/secret/secret.dart';
 import 'package:flutter/material.dart';
 
 class Diseases extends StatefulWidget {
@@ -18,69 +17,15 @@ class Diseases extends StatefulWidget {
   State<Diseases> createState() => _DiseasesState();
 }
 
-final List<Symptom> symptoms = <Symptom>[
-  Symptom(id: '1', diseaseId: '1', value: 'Fever'),
-  Symptom(id: '2', diseaseId: '1', value: 'Cough'),
-  Symptom(id: '3', diseaseId: '1', value: 'Sore throat'),
-  Symptom(id: '4', diseaseId: '1', value: 'Runny or stuffy nose'),
-  Symptom(id: '5', diseaseId: '1', value: 'Muscle or body aches'),
-  Symptom(id: '6', diseaseId: '1', value: 'Headaches'),
-  Symptom(id: '7', diseaseId: '1', value: 'Fatigue or extreme tiredness'),
-  Symptom(id: '8', diseaseId: '1', value: 'Chills'),
-  Symptom(
-      id: '1',
-      diseaseId: '1',
-      value: 'Nausea or vomiting (more common in children)'),
-  Symptom(id: '1', diseaseId: '1', value: 'Diarrhea (more common in children)'),
-];
-
 class _DiseasesState extends State<Diseases> {
   final GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController searchController = TextEditingController();
-  List<Disease> allDiseases = <Disease>[
-    Disease(id: '1', name: 'Influenza (Flu)', symptoms: symptoms)
-  ];
+  List<Disease> allDiseases = <Disease>[];
 
   List<Disease> diseases = [];
   bool searchWithSymptoms = false;
 
-  //fill symptoms list
-
-  // ignore: todo
-  //TODO: NO NEED FOR THIS METHOD FOR NOW 'AHORA in spanish '
-  // getSymptoms(String diseasesId) async {
-  //   final httpsUri = Uri(
-  //     scheme: 'https',
-  //     host: ipAddress,
-  //     path: '/disease/$diseasesId',
-  //   );
-  //   final headers = {
-  //     'Content-Type': 'application/json',
-  //     'Access-Control-Allow-Origin': '*', //'192.168.43.223'
-  //     // Replace * with the allowed domain or IP address
-  //     'Access-Control-Allow-Methods': 'Get',
-  //     'Access-Control-Allow-Headers': 'Content-Type'
-  //   };
-  //   await http
-  //       .get(
-  //     httpsUri,
-  //     headers: headers,
-  //   )
-  //       .then((response) {
-  //     for (var symptom in jsonDecode(response.body)['data'].length) {
-  //       symptoms.add(Symptom.fromMap(symptom));
-  //     }
-  //   });
-
-  //   return symptoms;
-  // }
-
   Future<void> getDiseases() async {
-    final httpsUri = Uri(
-      scheme: 'https',
-      host: ipAddress,
-      path: '/diseases',
-    );
     final headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*', //'192.168.43.223'
@@ -89,32 +34,29 @@ class _DiseasesState extends State<Diseases> {
       'Access-Control-Allow-Headers': 'Content-Type'
     };
 
-// ignore: todo
-//TODO: swap between setState & then bodies if it doesn't work
-    await http
-        .get(
-      httpsUri,
-      headers: headers,
-    )
-        .then((response) async {
-      final res = jsonDecode(response.body)['diseases'];
-      for (var diseaseMap in res.length) {
-        setState(() {
-          allDiseases.add(Disease.fromMap(diseaseMap));
-          diseases.add(Disease.fromMap(diseaseMap));
-        });
-      }
-    });
+    final url = Uri.parse('http://192.168.43.223:8080/fetch_illnesses');
+    final response = await http.get(url, headers: headers);
+
+    final res = jsonDecode(response.body)['data'];
+    diseases = [];
+    for (var diseaseMap in res) {
+      allDiseases.add(Disease.fromMap(diseaseMap));
+    }
+    diseases = allDiseases;
   }
 
   @override
   void initState() {
     super.initState();
-    getDiseases();
-    //TODO:just for now
-    //diseases will be allDiseases list
-    diseases = allDiseases;
-    print(allDiseases);
+    getDiseases().then((value) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    diseases.clear();
+    allDiseases.clear();
   }
 
   @override
@@ -244,6 +186,7 @@ class _DiseasesState extends State<Diseases> {
                   ),
                 ),
               ),
+              Text('${diseases.length} diseases'),
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -283,10 +226,19 @@ class _DiseasesState extends State<Diseases> {
                               child: ListView.builder(
                                 physics: const ClampingScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: symptoms.length,
+                                itemCount: diseases[index].symptoms.length,
                                 itemBuilder: (context, index) {
-                                  return Text(
-                                      '${index + 1}. ${symptoms[index].value}');
+                                  return Row(
+                                    children: [
+                                      Text(
+                                        '${index + 1}. ${diseases[index].symptoms[index].description}:',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                          diseases[index].symptoms[index].name),
+                                    ],
+                                  );
                                 },
                               ),
                             )

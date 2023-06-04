@@ -1,4 +1,5 @@
 import 'package:acsi_auth/view/diseases.dart';
+import 'package:acsi_auth/view/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
               .copyWith(background: Colors.white)),
-      home: const Diseases(),
+      home: const Home(),
     );
   }
 }

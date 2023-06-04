@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:acsi_auth/controllers/email_pwd_regex.dart';
 import 'package:acsi_auth/modules/user.dart';
 import 'package:acsi_auth/modules/constant/colors.dart';
+import 'package:acsi_auth/view/diseases.dart';
 import 'package:acsi_auth/view/edit_profile.dart';
 import 'package:acsi_auth/view/forget_password.dart';
 import 'package:acsi_auth/view/sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:crypto/crypto.dart';
@@ -197,29 +197,28 @@ class _HomeState extends State<Home> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          EditProfile(user: user),
-                                    ));
-                                Fluttertoast.showToast(
-                                  msg: 'Sign in successfully',
-                                  backgroundColor: Colors.red,
-                                  gravity: ToastGravity.TOP,
-                                );
+                                        builder: (context) =>
+                                            const Diseases()));
+                                // Fluttertoast.showToast(
+                                //   msg: 'Sign in successfully',
+                                //   backgroundColor: Colors.red,
+                                //   gravity: ToastGravity.TOP,
+                                // );
                               }
                             } else {
-                              Fluttertoast.showToast(
-                                msg: res['message'].toString(),
-                                backgroundColor: Colors.red,
-                                gravity: ToastGravity.TOP,
-                              );
+                              // Fluttertoast.showToast(
+                              //   msg: res['message'].toString(),
+                              //   backgroundColor: Colors.red,
+                              //   gravity: ToastGravity.TOP,
+                              // );
                             }
                           }
                         } catch (e) {
                           debugPrint(e.toString());
-                          Fluttertoast.showToast(
-                              msg: e.toString(),
-                              backgroundColor: Colors.redAccent,
-                              gravity: ToastGravity.TOP);
+                          // Fluttertoast.showToast(
+                          //     msg: e.toString(),
+                          //     backgroundColor: Colors.redAccent,
+                          //     gravity: ToastGravity.TOP);
                         }
                       }),
                   const SizedBox(height: 8),

@@ -3,7 +3,6 @@ import 'package:acsi_auth/modules/constant/colors.dart';
 import 'package:acsi_auth/modules/user.dart';
 import 'package:acsi_auth/secret/secret.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class EditProfile extends StatefulWidget {
@@ -219,16 +218,16 @@ class _EditProfileState extends State<EditProfile> {
                                 ));
                           }
 
-                          Fluttertoast.showToast(
-                              msg: 'Your account was updated successfully ^-^',
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: Colors.green);
+                          // Fluttertoast.showToast(
+                          //     msg: 'Your account was updated successfully ^-^',
+                          //     gravity: ToastGravity.TOP,
+                          //     backgroundColor: Colors.green);
                         }
                       } catch (e) {
-                        Fluttertoast.showToast(
-                            msg: 'Failed to save changes:\n${e.toString()}',
-                            gravity: ToastGravity.TOP,
-                            backgroundColor: Colors.redAccent);
+                        // Fluttertoast.showToast(
+                        //     msg: 'Failed to save changes:\n${e.toString()}',
+                        //     gravity: ToastGravity.TOP,
+                        //     backgroundColor: Colors.redAccent);
                       }
                     }),
               ),

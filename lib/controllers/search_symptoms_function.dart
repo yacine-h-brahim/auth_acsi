@@ -11,8 +11,8 @@ List<Disease> searchSymptomsMethod(List<Disease> diseases, String query) {
   for (final disease in diseases) {
     // Iterate through each symptom within the disease
     for (final symptom in disease.symptoms) {
-      final lowerCaseValue = symptom.value.toLowerCase();
-      final upperCaseValue = symptom.value.toUpperCase();
+      final lowerCaseValue = symptom.name.toLowerCase();
+      final upperCaseValue = symptom.name.toUpperCase();
 
       // Check if the symptom value is an exact match or contains the query string
       if (lowerCaseValue == normalizedQuery ||
@@ -22,9 +22,9 @@ List<Disease> searchSymptomsMethod(List<Disease> diseases, String query) {
         matchingDisease.add(disease);
       } else {
         // Check if any substring of the symptom value matches the query
-        for (int i = 0; i < symptom.value.length - 1; i++) {
-          for (int j = i + 2; j <= symptom.value.length; j++) {
-            final substring = symptom.value.substring(i, j).toLowerCase();
+        for (int i = 0; i < symptom.name.length - 1; i++) {
+          for (int j = i + 2; j <= symptom.name.length; j++) {
+            final substring = symptom.name.substring(i, j).toLowerCase();
             if (substring == normalizedQuery) {
               matchingDisease.add(disease);
               break;

@@ -2,7 +2,6 @@ import 'package:acsi_auth/controllers/email_pwd_regex.dart';
 import 'package:acsi_auth/secret/secret.dart';
 import 'package:acsi_auth/view/home.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../modules/constant/colors.dart';
 
 class ForgetPassword extends StatefulWidget {
@@ -93,10 +92,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         // final response = await http.get(uri);
                       }
                     } catch (e) {
-                      Fluttertoast.showToast(
-                          msg: e.toString(),
-                          backgroundColor: Colors.redAccent,
-                          gravity: ToastGravity.TOP);
+                      // Fluttertoast.showToast(
+                      //     msg: e.toString(),
+                      //     backgroundColor: Colors.redAccent,
+                      //     gravity: ToastGravity.TOP);
                     }
                   }),
               const SizedBox(height: 20),
